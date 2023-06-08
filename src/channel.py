@@ -2,10 +2,8 @@ import json
 import os
 from googleapiclient.discovery import build
 
-
 class Channel:
     """Класс для ютуб-канала"""
-
     api_key = os.getenv('API_KEY')
     youtube = build('youtube', 'v3', developerKey=api_key)
 
@@ -20,6 +18,29 @@ class Channel:
         self.view_count = self.channel['items'][0]['statistics']['viewCount']
         self.description = self.channel['items'][0]['snippet']['description']
 
+    def __str__(self):
+        return f'{self.title} ({self.url})'
+
+    def __add__(self, other_channel):
+        return int(self.subscribers) + int(other_channel.subscribers)
+
+    def __sub__(self, other_channel):
+        return int(self.subscribers) - int(other_channel.subscribers)
+
+    def __gt__(self, other_channel):
+        return int(self.subscribers) > int(other_channel.subscribers)
+
+    def __lt__(self, other_channel):
+        return int(self.subscribers) < int(other_channel.subscribers)
+
+    def __ge__(self, other_channel):
+        return int(self.subscribers) >= int(other_channel.subscribers)
+
+    def __le__(self, other_channel):
+        return int(self.subscribers) <= int(other_channel.subscribers)
+
+    def __eq__(self, other_channel):
+        return int(self.subscribers) == int(other_channel.subscribers)
 
     def print_info(self) -> None:
         """Выводит в консоль информацию о канале."""
