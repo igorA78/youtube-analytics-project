@@ -2,8 +2,9 @@ import os
 from googleapiclient.discovery import build
 
 class Video:
+    API_KEY = os.getenv('API_KEY')
+
     def __init__(self, video_id):
-        self.API_KEY = os.getenv('API_KEY')
         self.channel = self.get_channel().videos().list(
             part='snippet,statistics,contentDetails,topicDetails',
             id=video_id
